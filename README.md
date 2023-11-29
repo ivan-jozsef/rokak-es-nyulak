@@ -1,1 +1,13 @@
 # rokak-es-nyulak
+
+A jelenlegi program egy körökre osztott szimulációt hivatott megvalósítani, amely bemutatja egy fiktív ökológia populációjának változását. A program alapja John Horton Conway, The Game of Life nevű szimulációja, amelyben sejtek születését és pusztulását követhetjük nyomon, különbőző feltételek alapján.
+
+Jelen esetben egy mező vegetációját és a rajta élő nyulak és rókák populációját figyelhetjük meg.
+A mező rácsrendszerben jeleníti meg az ökoszisztémát. 
+
+A mező minden pontjában fű nő, melynek három állapota van: fűkezdemény, zsenge fű és kifejlett fűcsomó. A fűkezdeménynek nincs tápértéke (és nem is ehető meg a nyulak által, ami azt szolgálja, hogy a szimulációnkban a területen ne psuztuljon ki a növényzet). Amennyiben egy adott körben nem trartózkodik az adott mezőn nyúl, úgy az növekedésnek indulhat. A fűkezdeményből zsenge fű lesz, a abból kifejlett fűcsomó. A különböző fejlettségi állapotoknak kükönböző tápértéke van, a három szinten megfelelő értékek a következők: 0 - 1 - 2.
+
+A mező legenerálásakor előre meghatározott vagy kiválasztható mennyiségű nyulat helyezünk el. véletlenszerű cellákba. A nyulak a korábban említett fűvel táplálkoznak. Amennyiben egy mezőn minimum zsenge fű található (és a fű által biztosított tápértéket teljes mértékben tudják hasznosítani), úgy a nyulak táplálkoznak. Ha a nyulak tápláltsága 0-ra csökken, akkor az adott nyúl elpusztul (maxumim értéke 5, ami minden körben 1-gyel csökken). Amennyiben egy nyúl nem tud táplálkozni, mert az adott mezőn csak fűkezdemény találhatú, úgy az állat a szomszédos mezők egyikére mozog, lehetőleg arra, ahol kifejlett fűcsomót talál (több ugyanolyan választási lehetőség közül véletlenszerűen választ), és sem róka, sem másik nyúl nem tartózkodik már. Ha két nyúl egymás melleti mezőn van és nincs körülöttük más állat, akkor szaporodnak; az egyik üres mezőre egy új nyúl kerül.
+
+A mező legenerálásakor szintén elhelyezésre kerülnek, megadott számban vagy kiválasztható mennyiségben rókák. A rókák nyulakkal táplálkoznak, különben elpusztulnak (maximális tápláltságuk 10, ami szintén csökken 1-gyel minden körben). A nyulak +3 tápláltságot nyújtanak a rókák egyedeinek. Ha két mezőn belül talál nyulat és éhes (tápláltsági értéke 8 alatt van), akkor a nyúl mezejére lép és elfogyasztja azt. Egy körben egyet mozoghat és egyszer táplálkozhat, viszont ha nem tud táplálkozni, akkor 2 mezőt mozoghat abban a körben, de mindkét esetben csak oda, ahol más róka még nem tartózkodik. Ha két róka egymás mellett van, és más állat nem tartózkodik a közelükben, akkor szaporodni fognak, ami egy új rókát eredményez egy üres mezőre.
+
