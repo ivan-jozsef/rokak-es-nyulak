@@ -1,6 +1,6 @@
 ﻿namespace RokakNyulak
 {
-    public class Field
+    /*public class Field
     {
         public int[,] field;
         private Random random;
@@ -80,6 +80,43 @@
                 }
             }
 
+        }
+    }*/
+
+    public class Field : IField
+    {
+        private string? _Entity;
+        public string Entity { 
+            get 
+            {
+                return _Entity ?? "undefinied";
+            } 
+            set
+            {
+                if (value == String.Empty) throw new ArgumentException("A mező fajtája nem lehet üres!");
+                else _Entity = value;
+            }
+        }
+        private int[] _Pos;
+        public int[] Pos
+        {
+            get
+            {
+                return _Pos;
+            }
+            set
+            {
+                if (value.Length > 2) throw new ArgumentOutOfRangeException("Csak sor és oszlop létezik!");
+                else _Pos = value;
+            }
+        }
+
+        public ConsoleColor Color { get; set; }
+
+        public Field(int[] pos, ConsoleColor color)
+        {
+            this.Pos = pos;
+            this.Color = color;
         }
     }
 }
