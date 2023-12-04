@@ -8,13 +8,25 @@ namespace RokakNyulak
 {
     public interface IField
     {
-        //entity = "grass,fox,rabbit"
+        /// <summary>
+        /// The entity
+        /// </summary>
+        //Entitás neve (fajtája?!)
         string Entity { get; set; }
 
-        //pos = int[2] -> row,col
+        /// <summary>
+        /// The position of entity
+        /// </summary>
+        //A Field (entitás) pozíciója mely 2 elemű int tömb [y - sor, x - oszlop].
         int[] Pos { get; set; }
 
-        //Color
+        /// <summary>
+        /// Gets or sets the color.
+        /// </summary>
+        /// <value>
+        /// The color.
+        /// </value>
+        //A Field (entitás?!) színe. ConsoleColor a típusa.
         ConsoleColor Color { get; set; }
     }
 }

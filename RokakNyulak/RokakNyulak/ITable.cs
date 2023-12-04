@@ -8,15 +8,25 @@ namespace RokakNyulak
 {
     public interface ITable
     {
-        //Size [X,Y]
+        /// <summary>
+        /// Gets or sets the size.
+        /// </summary>
+        /// <value>
+        /// The size.
+        /// </value>
+        //Táblaméret mely 2 elemű [y - sor, x - oszlop].
         int[] Size { get; set; }
-        //Fields
+
+        /// <summary>
+        /// The fields
+        /// </summary>
+        //A mezők listája
         List<Field> Fields { get; set; }
 
-        //SetCellColor
-        //bool SetCellColor(int[] pos);
-
-        //DrawFields
+        /// <summary>
+        /// Draws the fields.
+        /// </summary>
+        //Kiírja a Field-eket.
         void DrawFields();
     }
 }

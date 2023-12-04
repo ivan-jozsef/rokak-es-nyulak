@@ -8,7 +8,11 @@ namespace RokakNyulak
 {
     public class Grass : Field,IGrass
     {
-        private string _Entity;
+        /// <summary>
+        /// The entity
+        /// </summary>
+        //Grass Field entitása, csak "grass" lehet!!
+        private string _Entity = String.Empty;
 		public new string Entity {
             get
             {
@@ -21,6 +25,10 @@ namespace RokakNyulak
             }
         }
 
+        /// <summary>
+        /// The food value
+        /// </summary>
+        //Grass Field tápértéke (Max 2!)
         private int _Food_Value;
         public int Food_value
         {
@@ -32,6 +40,10 @@ namespace RokakNyulak
             }
         }
 
+        /// <summary>
+        /// The state
+        /// </summary>
+        //Grass Field állapota (Max 3!)
         private int _State;
         public int State { 
             get { return _State; } 
@@ -40,15 +52,25 @@ namespace RokakNyulak
                 else _State = value;
             } 
         }
-        
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Grass"/> class.
+        /// </summary>
+        /// <param name="pos">The position.</param>
+        /// <param name="food_value">The food value.</param>
+        /// <param name="state">The state.</param>
+        /// <param name="color">The color.</param>
         /*
-         
-         
-        */
-        public Grass(string entity, int[] pos, int food_value, int state, ConsoleColor color) : base(pos,color)
+         * Grass konstruktora.
+         * Paraméterek:
+         * pos -> Grass Field pozíciója mely 2 elemű int tömb [y - sor, x - oszlop].
+         * food_value -> Grass Field tápértéke (Max 2!)
+         * state -> Grass Field állapota (Max 3!)
+         * color -> Grass Field színe. ConsoleColor típusú
+         */
+        public Grass(int[] pos, int food_value, int state, ConsoleColor color) : base(pos,color)
         {
-            this.Entity = entity;
+            this.Entity = "grass";
             this.Food_value = food_value;
             this.State = state;
         }
