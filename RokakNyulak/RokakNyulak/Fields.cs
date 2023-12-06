@@ -18,7 +18,7 @@ namespace RokakNyulak
         /// The fields
         /// </summary>
         //A mezők listája
-        List<Field> fields = new List<Field>();
+        private List<Field> fields { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum size.
@@ -26,8 +26,8 @@ namespace RokakNyulak
         /// <value>
         /// The maximum size.
         /// </value>
-        //Maximum méret (táblaméret) mely 2 elemű [y - sor, x - oszlop].
-        private int[] MaxSize { get; set; }
+        //Méret (táblaméret) mely 2 elemű [y - sor, x - oszlop].
+        public int[] Size { get; set; }
 
         /// <summary>
         /// Gets the fields.
@@ -37,6 +37,20 @@ namespace RokakNyulak
         /// </value>
         //Vissza adja a Field -ek listáját.
         public List<Field> GetFields => fields;
+        public List<Field> GetEntityFields(string entityName)
+        {
+            //fields.Where(x => x.Entity == entityName).ToList() ?? new List<Field>();
+            if (fields != null) return fields.Where(x => x.Entity == entityName).ToList();
+            else return new List<Field> { };
+        }
+
+        public int GetEntityCount(string entityName) => fields.Count(x => x.Entity == entityName);
+
+        public string GetNextEntityType(string actEntity)
+        {
+            List<Field> actEntityFields = GetEntityFields(actEntity);
+            return actEntityFields.Count > GetEntityFields("grass").Count ? "grass" : actEntity; 
+        }
 
         /// <summary>
         /// The entities.
@@ -45,7 +59,9 @@ namespace RokakNyulak
         string[] entities =
         {
             "grass",
-            "etc"
+            "fox",
+            "rabbit",
+            ""
         };
 
         /// <summary>Generates the fields.</summary>
@@ -57,15 +73,17 @@ namespace RokakNyulak
          */
         IEnumerable<Field> GenerateFields()
         {
-            for (int row = 0; row < MaxSize[1]; row++)
+            for (int row = 0; row < Size[1]; row++)
             {
-                for (int col = 0; col < MaxSize[0]; col++)
+                for (int col = 0; col < Size[0]; col++)
                 {
                     int[] ActPos = { row, col };
                     yield return entities[rnd.Next(entities.Length)] switch
                     {
                         "grass" => new Grass(ActPos, rnd.Next(0, 2 + 1), rnd.Next(0, 3 + 1), ConsoleColor.Green),
-                        _ => new Field(ActPos, ConsoleColor.Gray)
+                        "fox" => new Field("fox", ActPos, ConsoleColor.Red),
+                        "rabbit" => new Field("rabbit", ActPos, ConsoleColor.White),
+                        _ => new Grass(ActPos, rnd.Next(0, 2 + 1), rnd.Next(0, 3 + 1), ConsoleColor.Green)
                     };
                 }
             }
@@ -79,7 +97,7 @@ namespace RokakNyulak
          */
         public Fields(int[] maxsize) 
         { 
-            this.MaxSize = maxsize;
+            this.Size = maxsize;
             this.fields = GenerateFields().ToList();
         }
     }

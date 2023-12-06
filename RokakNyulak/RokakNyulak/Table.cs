@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RokakNyulak
 {
-    public class Table : ITable
+    public class Table
     {
         /// <summary>
         /// Gets or sets the size.
@@ -21,7 +22,7 @@ namespace RokakNyulak
         /// The fields
         /// </summary>
         //A mezők listája
-        public List<Field> Fields { get; set; }
+        public Fields TableFields { get; set; }
 
         /// <summary>
         /// Sets the color of the cell.
@@ -36,13 +37,47 @@ namespace RokakNyulak
         //Kiírja a Field-eket.
         public void DrawFields()
         {
-            foreach (var field in Fields)
+            Console.Clear();
+            foreach (var field in TableFields.GetFields)
             {
                 Console.SetCursorPosition(field.Pos[0], field.Pos[1]);
                 SetCellColor(field.Color);
                 Console.Write(" ");
                 Console.ResetColor();
             }
+            Console.WriteLine($"\nAktuális állapot: \n" +
+                    $"\tFű mezők száma: {TableFields.GetEntityCount("grass")}\n" +
+                    $"\tNyúl mezők száma: {TableFields.GetEntityCount("rabbit")}\n" +
+                    $"\tRóka mezők száma: {TableFields.GetEntityCount("fox")}\n"+
+                    $"\tMezők száma: {TableFields.GetFields.Count}");
+
+            
+            NextRound();
+        }
+
+        /// <summary>
+        /// Nexts the round.
+        /// </summary>
+        public void NextRound()
+        {
+            foreach(var actField in TableFields.GetFields)
+            {
+                if (actField.Entity == "grass") {
+                    Grass useField = (Grass) actField;
+                    useField.Action(); 
+                }
+            }
+            System.Threading.Thread.Sleep(5000);
+            Console.Clear();
+            DrawFields();
+        }
+
+        /// <summary>
+        /// Starts the game.
+        /// </summary>
+        public void StartGame()
+        { 
+            DrawFields();
         }
 
         /// <summary>
@@ -51,10 +86,10 @@ namespace RokakNyulak
         /// <param name="fields">The list of fields.</param>
         /// <param name="size">The size of Table [y - rows,x - cols].</param>
         //Table konstruktor, két paramétere van: A Field-ek listája, a maximális méret egy 2 elemű int tömbben. [y - sorok, x - oszlopok]
-        public Table(List<Field> fields, int[] size) 
+        public Table(Fields fields) 
         {
-            this.Size = size;
-            this.Fields = fields;
+            this.Size = fields.Size;
+            this.TableFields = fields;
         }
     }
 }

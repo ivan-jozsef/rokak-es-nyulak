@@ -6,25 +6,8 @@ using System.Threading.Tasks;
 
 namespace RokakNyulak
 {
-    public class Grass : Field,IGrass
+    public class Grass : Field
     {
-        /// <summary>
-        /// The entity
-        /// </summary>
-        //Grass Field entitása, csak "grass" lehet!!
-        private string _Entity = String.Empty;
-		public new string Entity {
-            get
-            {
-                return _Entity;
-            }
-            set
-            {
-                if (value != "grass") throw new InvalidDataException("Fű mező nem lehet állat vagy egyéb más!");
-                else _Entity = value;
-            }
-        }
-
         /// <summary>
         /// The food value
         /// </summary>
@@ -53,6 +36,24 @@ namespace RokakNyulak
             } 
         }
 
+        public void Action()
+        {
+            if(this.State < 3) this.State++;
+
+            switch(this.Food_value)
+            {
+                case 0:
+                    this.Food_value++;
+                    base.Color = ConsoleColor.Cyan;
+                break;
+                case 1: 
+                    this.Food_value++;
+                    base.Color = ConsoleColor.Green;
+                break;
+            }
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Grass"/> class.
         /// </summary>
@@ -68,9 +69,8 @@ namespace RokakNyulak
          * state -> Grass Field állapota (Max 3!)
          * color -> Grass Field színe. ConsoleColor típusú
          */
-        public Grass(int[] pos, int food_value, int state, ConsoleColor color) : base(pos,color)
+        public Grass(int[] pos, int food_value, int state, ConsoleColor color) : base("grass", pos,color)
         {
-            this.Entity = "grass";
             this.Food_value = food_value;
             this.State = state;
         }
