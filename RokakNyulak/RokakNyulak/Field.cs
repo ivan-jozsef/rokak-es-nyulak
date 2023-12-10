@@ -88,13 +88,15 @@
 
         public void Simulation()
         {
-            int simCount = 12;
+            int simCount = 10;
             while (simCount > 0)
             {
                 List<Fox> newFoxes = new List<Fox>(foxes);
 
                 foreach (var fox in newFoxes)
                 {
+                    fox.Move();
+
                     fox.Eat();
                 }
                 foxes.RemoveAll(fox => fox == null || fox.Hunger == 0);
@@ -108,7 +110,7 @@
                 Console.WriteLine($"Hátralévő körök: {simCount}");
                 DrawField();
 
-                Thread.Sleep(400);
+                Thread.Sleep(1000);
                 simCount--;
             }
         }
