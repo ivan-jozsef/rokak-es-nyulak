@@ -37,6 +37,35 @@ namespace RokakNyulak
             int newRow = Row;
             int newCol = Col;
 
+            for (int i = -2; i <= 2; i++)
+            {
+                for (int j = -2; j <= 2; j++)
+                {
+                    int targetRow = Row + i;
+                    int targetCol = Col + j;
+
+                    // Ellenőrizzük, hogy a célmegállapítás a pályán belül van-e
+                    if (targetRow >= 0 && targetRow < fox_on_field.field.GetLength(0) &&
+                        targetCol >= 0 && targetCol < fox_on_field.field.GetLength(1))
+                    {
+                        // Ellenőrizzük, hogy a célmezőn van-e nyúl
+                        if ((fox_on_field.field[targetRow, targetCol] == 11 ||
+                            fox_on_field.field[targetRow, targetCol] == 21 ||
+                            fox_on_field.field[targetRow, targetCol] == 31) &&
+                            (Hunger < 8))
+                        {
+                            // Mozgatjuk a rókát a nyúlhoz
+                            fox_on_field.field[Row, Col] -= 2; // Rókát eltávolítjuk a jelenlegi mezőről
+                            fox_on_field.field[targetRow, targetCol] += 1; // Rókát elhelyezzük a nyúl mezőjére
+                            Hunger += 3;
+                            Row = targetRow;
+                            Col = targetCol;
+                            return; 
+                        }
+                    }
+                }
+            }
+
             int direction = random.Next(8);
 
             switch (direction)
