@@ -4,6 +4,8 @@
     {
         public int[,] field;
         private Random random;
+        public List<Fox> foxes = new List<Fox>();
+
         public Field()
         {
             field = new int[20, 50];
@@ -46,7 +48,7 @@
         }
 
 
-        public void FieldGenerator()
+        public List<Fox> FieldGenerator()
         {
             int[] allapotok = new int[] { 10, 20, 30 };
             random = new Random();
@@ -77,9 +79,38 @@
                 {
                     field[row, col] += 2;
                     //new Fox osztály, a megfelelő koordinátákkal
+                    Fox fox = new Fox(row, col, this);
+                    foxes.Add(fox);
                 }
             }
+            return foxes;
+        }
 
+        public void Simulation()
+        {
+            int simCount = 12;
+            while (simCount > 0)
+            {
+                List<Fox> newFoxes = new List<Fox>(foxes);
+
+                foreach (var fox in newFoxes)
+                {
+                    fox.Eat();
+                }
+                foxes.RemoveAll(fox => fox == null || fox.Hunger == 0);
+
+                //foreach (var fox in foxes)
+                //{
+                //    Console.WriteLine($"{fox.Row}, {fox.Col}, {fox.Hunger}");
+                //}
+                Console.Clear();
+                Console.WriteLine($"A rókák jelenlegi száma: {foxes.Count}");
+                Console.WriteLine($"Hátralévő körök: {simCount}");
+                DrawField();
+
+                Thread.Sleep(400);
+                simCount--;
+            }
         }
     }
 }
