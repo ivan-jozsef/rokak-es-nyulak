@@ -70,8 +70,8 @@
             }
             for (int i = 0; i < 5; i++)
             {
-                int row = random.Next(0, field.GetLength(0) - 1);
-                int col = random.Next(0, field.GetLength(1) - 1);
+                int row = random.Next(1, field.GetLength(0) - 1);
+                int col = random.Next(1, field.GetLength(1) - 1);
 
                 if (field[row, col] == 10 || field[row, col] == 20 || field[row, col] == 30)
                 {
