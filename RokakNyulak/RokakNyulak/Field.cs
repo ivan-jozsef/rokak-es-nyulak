@@ -59,6 +59,8 @@
             this.Pos = pos;
             this.Color = color;
         }
+
+
     }
 }
 

@@ -61,7 +61,7 @@ namespace RokakNyulak
             "grass",
             "fox",
             "rabbit",
-            ""
+            
         };
 
         /// <summary>Generates the fields.</summary>
@@ -78,10 +78,25 @@ namespace RokakNyulak
                 for (int col = 0; col < Size[0]; col++)
                 {
                     int[] ActPos = { row, col };
+                    //string entityType = entities[rnd.Next(entities.Length)];
+                    //if (entityType == "fox" && rnd.Next(50) == 0)
+                    //{
+                    //    yield return new Fox(entityType, ActPos, ConsoleColor.Red);
+                    //} else
+                    //{
+                    //    yield return entityType switch
+                    //    {
+                    //        "grass" => new Grass(ActPos, rnd.Next(0, 2 + 1), rnd.Next(0, 3 + 1), ConsoleColor.Green),
+                    //        "rabbit" => new Field("rabbit", ActPos, ConsoleColor.White),
+                    //        _ => new Grass(ActPos, rnd.Next(0, 2 + 1), rnd.Next(0, 3 + 1), ConsoleColor.Green)
+                    //    };
+                    //}
+
+
                     yield return entities[rnd.Next(entities.Length)] switch
                     {
                         "grass" => new Grass(ActPos, rnd.Next(0, 2 + 1), rnd.Next(0, 3 + 1), ConsoleColor.Green),
-                        "fox" => new Field("fox", ActPos, ConsoleColor.Red),
+                        "fox" => new Fox("fox", ActPos, ConsoleColor.Red),
                         "rabbit" => new Field("rabbit", ActPos, ConsoleColor.White),
                         _ => new Grass(ActPos, rnd.Next(0, 2 + 1), rnd.Next(0, 3 + 1), ConsoleColor.Green)
                     };

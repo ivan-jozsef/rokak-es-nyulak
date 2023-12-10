@@ -42,7 +42,7 @@ namespace RokakNyulak
             {
                 Console.SetCursorPosition(field.Pos[0], field.Pos[1]);
                 SetCellColor(field.Color);
-                Console.Write(" ");
+                Console.Write("  ");
                 Console.ResetColor();
             }
             Console.WriteLine($"\nAktuális állapot: \n" +
@@ -65,6 +65,13 @@ namespace RokakNyulak
                 if (actField.Entity == "grass") {
                     Grass useField = (Grass) actField;
                     useField.Action(); 
+                } else if (actField.Entity == "fox")
+                {
+                    if(actField is Fox fox)
+                    {
+                        fox.Move(TableFields.GetFields);
+
+                    }
                 }
             }
             System.Threading.Thread.Sleep(5000);
