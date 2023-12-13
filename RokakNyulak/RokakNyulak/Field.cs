@@ -86,6 +86,24 @@
             return foxes;
         }
 
+        public void GrowGrass()
+        {
+            for (int i = 0; i < field.GetLength(0); i++)
+            {
+                for (int j = 0; j < field.GetLength(1); j++)
+                {
+                    int currentState = field[i, j];
+                    if (currentState == 10 || currentState == 20 || currentState == 30)
+                    {
+                        if (currentState < 30)
+                        {
+                            field[i,j] += 10;
+                        }
+                    }
+                }
+            }
+        }
+
         public void Simulation()
         {
             int simCount = 100;
@@ -98,6 +116,9 @@
                 //{
                 //    Console.WriteLine($"{fox.Row}, {fox.Col}, {fox.Hunger}");
                 //}
+
+                GrowGrass(); 
+
                 DrawField();
 
                 List<Fox> newFoxes = new List<Fox>(foxes);
