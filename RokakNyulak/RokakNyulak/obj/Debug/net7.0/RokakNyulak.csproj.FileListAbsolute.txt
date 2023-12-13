@@ -1,0 +1,11 @@
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\bin\Debug\net7.0\RokakNyulak.deps.json
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\bin\Debug\net7.0\RokakNyulak.dll
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\bin\Debug\net7.0\RokakNyulak.pdb
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\obj\Debug\net7.0\RokakNyulak.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\obj\Debug\net7.0\RokakNyulak.AssemblyInfoInputs.cache
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\obj\Debug\net7.0\RokakNyulak.AssemblyInfo.cs
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\obj\Debug\net7.0\RokakNyulak.csproj.CoreCompileInputs.cache
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\obj\Debug\net7.0\RokakNyulak.dll
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\obj\Debug\net7.0\refint\RokakNyulak.dll
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\obj\Debug\net7.0\RokakNyulak.pdb
+C:\Users\somku\Source\Repos\rokak-es-nyulak\RokakNyulak\RokakNyulak\obj\Debug\net7.0\ref\RokakNyulak.dll

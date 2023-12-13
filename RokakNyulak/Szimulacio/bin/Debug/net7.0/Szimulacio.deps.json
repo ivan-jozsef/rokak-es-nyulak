@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "Szimulacio/1.0.0": {
+        "dependencies": {
+          "RokakNyulak": "1.0.0"
+        },
+        "runtime": {
+          "Szimulacio.dll": {}
+        }
+      },
+      "RokakNyulak/1.0.0": {
+        "runtime": {
+          "RokakNyulak.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Szimulacio/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RokakNyulak/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
