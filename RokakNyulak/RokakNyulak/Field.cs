@@ -70,7 +70,7 @@
                     //new Rabbit osztály a megfelelő koordinátákkal
                 }
             }
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 50; i++)
             {
                 int row = random.Next(1, field.GetLength(0) - 1);
                 int col = random.Next(1, field.GetLength(1) - 1);
@@ -88,29 +88,50 @@
 
         public void Simulation()
         {
-            int simCount = 10;
+            int simCount = 100;
             while (simCount > 0)
             {
-                List<Fox> newFoxes = new List<Fox>(foxes);
-
-                foreach (var fox in newFoxes)
-                {
-                    fox.Move();
-
-                    fox.Eat();
-                }
-                foxes.RemoveAll(fox => fox == null || fox.Hunger == 0);
-
+                Console.Clear();
+                Console.WriteLine($"A rókák jelenlegi száma: {foxes.Count}");
+                Console.WriteLine($"Hátralévő körök: {simCount}");
                 //foreach (var fox in foxes)
                 //{
                 //    Console.WriteLine($"{fox.Row}, {fox.Col}, {fox.Hunger}");
                 //}
-                Console.Clear();
-                Console.WriteLine($"A rókák jelenlegi száma: {foxes.Count}");
-                Console.WriteLine($"Hátralévő körök: {simCount}");
                 DrawField();
 
-                Thread.Sleep(1000);
+                List<Fox> newFoxes = new List<Fox>(foxes);
+
+                foreach (var fox in newFoxes)
+                {
+
+                    fox.Reproduction();
+                    fox.Move();
+                    fox.Eat();
+
+                }
+                foxes.RemoveAll(fox => fox == null || fox.Hunger == 0);
+
+                //Console.Clear();
+                //Console.WriteLine($"A rókák jelenlegi száma: {foxes.Count}");
+                //Console.WriteLine($"Hátralévő körök: {simCount}");
+                //DrawField();
+
+
+
+
+
+
+
+
+
+                Thread.Sleep(2000);
+
+                //while (!Console.KeyAvailable)
+                //{
+                //    Thread.Sleep(100);
+                //}
+                //Console.ReadKey(true);
                 simCount--;
             }
         }

@@ -105,5 +105,69 @@ namespace RokakNyulak
                 Col = newCol;
             }
         }
+
+        public Fox? Reproduction()
+        {
+            //környező mezők vizsgálata, üres, illetve két róka egymás mellett van, akkor a következő körbe egy szabad mezőre egy új róka kerül
+
+            // Keresés a környező mezőkön
+            int newFoxRow;
+            int newFoxCol;
+
+            List<(int, int)> emptyFields = new List<(int, int)>();
+            List<(int, int)> neighborFoxes = new List<(int, int)>();
+
+
+            for (int i = -1; i <= 1; i++) //egy róka körül kiválasztunk egy üres mezőt, ahol csak egy másik róka tartózkodik
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    //Console.WriteLine($"Az egyik róka koordinátái: {Row}:{Col}");
+                    int targetRow = Row + i;
+                    int targetCol = Col + j;
+
+                    // Ellenőrizzük, hogy a célmegállapítás a pályán belül van-e
+                    if (targetRow >= 0 && targetRow < fox_on_field.field.GetLength(0) &&
+                        targetCol >= 0 && targetCol < fox_on_field.field.GetLength(1))
+                    {
+                        if (!(i == 0 && j == 0))
+                        {
+                            // Ellenőrizzük, hogy a célmezőn van-e róka
+                            if (fox_on_field.field[targetRow, targetCol] == 12 ||
+                                fox_on_field.field[targetRow, targetCol] == 22 ||
+                                fox_on_field.field[targetRow, targetCol] == 32)
+                            {
+                                neighborFoxes.Add((targetRow, targetCol));
+                            }                            
+                            else if (fox_on_field.field[targetRow, targetCol] == 10 ||
+                                fox_on_field.field[targetRow, targetCol] == 20 ||
+                                fox_on_field.field[targetRow, targetCol] == 30)
+                            {
+                                emptyFields.Add((targetRow, targetCol));
+                            }
+                            
+                        }
+                    }
+                }
+            }
+
+
+            if (neighborFoxes.Count == 1 && emptyFields.Count >= 1 && fox_on_field.foxes.IndexOf(this) == 0)
+            {
+                (newFoxRow, newFoxCol) = emptyFields[0];
+                fox_on_field.field[newFoxRow, newFoxCol] += 2;
+                //return true;
+
+                Fox newFox = new Fox(newFoxRow, newFoxCol, fox_on_field);
+                newFox.Hunger = 10;
+                fox_on_field.foxes.Add(newFox);
+                return newFox;
+
+                //return true;
+            }
+            return null;
+        }
+
     }
 }
+
