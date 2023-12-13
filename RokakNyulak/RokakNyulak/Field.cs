@@ -5,6 +5,8 @@
         public int[,] field;
         private Random random;
         public List<Fox> foxes = new List<Fox>();
+        public List<Rabbit> rabbits = new List<Rabbit>();
+
 
         public Field()
         {
@@ -21,6 +23,8 @@
                 {
                     SetCellColor(row, col);
                     Console.Write("  ");
+
+                    //Console.Write($"{field[row, col]} ");
                 }
                 Console.ResetColor();
                 Console.WriteLine();
@@ -48,7 +52,7 @@
         }
 
 
-        public List<Fox> FieldGenerator()
+        public Tuple<List<Fox>, List<Rabbit>> FieldGenerator()
         {
             int[] allapotok = new int[] { 10, 20, 30 };
             random = new Random();
@@ -67,13 +71,15 @@
                 if (field[row, col] == 10 || field[row, col] == 20 || field[row, col] == 30)
                 {
                     field[row, col] += 1;
+                    Rabbit rabbit = new Rabbit(row, col, this);
+                    rabbits.Add(rabbit);
                     //new Rabbit osztály a megfelelő koordinátákkal
                 }
             }
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 13; i++)
             {
-                int row = random.Next(1, field.GetLength(0) - 1);
-                int col = random.Next(1, field.GetLength(1) - 1);
+                int row = random.Next(0, field.GetLength(0));
+                int col = random.Next(0, field.GetLength(1));
 
                 if (field[row, col] == 10 || field[row, col] == 20 || field[row, col] == 30)
                 {
@@ -83,7 +89,7 @@
                     foxes.Add(fox);
                 }
             }
-            return foxes;
+            return Tuple.Create(foxes, rabbits);
         }
 
         public void GrowGrass()
@@ -93,68 +99,79 @@
                 for (int j = 0; j < field.GetLength(1); j++)
                 {
                     int currentState = field[i, j];
-                    if (currentState == 10 || currentState == 20 || currentState == 30)
+                    //Console.WriteLine(currentState);
+                    if (currentState == 10 || currentState == 20)
                     {
-                        if (currentState < 30)
-                        {
-                            field[i,j] += 10;
-                        }
+                        field[i,j] += 10;
                     }
                 }
             }
         }
 
+        public void Update()
+        {
+            List<Fox> newFoxes = new List<Fox>(foxes);
+            List<Rabbit> newRabbits = new List<Rabbit>(rabbits);
+
+            foreach (var fox in newFoxes)
+            {
+                fox.Reproduction();
+                fox.Move();
+            }
+
+            foreach (var rabbit in newRabbits)
+            {
+                rabbit.Reproduction();
+                rabbit.Move();
+            }
+
+            foxes.RemoveAll(fox => fox == null || fox.Hunger == 0);
+            rabbits.RemoveAll(rabbit => rabbit == null || rabbit.Hunger == 0);
+
+            GrowGrass();
+        }
+
         public void Simulation()
         {
-            int simCount = 100;
+            int simCount = 1000;
             while (simCount > 0)
             {
                 Console.Clear();
-                Console.WriteLine($"A rókák jelenlegi száma: {foxes.Count}");
-                Console.WriteLine($"Hátralévő körök: {simCount}");
-                //foreach (var fox in foxes)
-                //{
-                //    Console.WriteLine($"{fox.Row}, {fox.Col}, {fox.Hunger}");
-                //}
 
-                GrowGrass(); 
+                Console.WriteLine($"A rókák jelenlegi száma: {foxes.Count}");
+                Console.WriteLine($"A nyulak jelenlegi száma: {rabbits.Count}");
+
+                Console.WriteLine($"Hátralévő körök: {simCount}");
+
 
                 DrawField();
 
-                List<Fox> newFoxes = new List<Fox>(foxes);
+                Update();
 
-                foreach (var fox in newFoxes)
-                {
+                Console.Clear();
 
-                    fox.Reproduction();
-                    fox.Move();
-                    fox.Eat();
+                Console.WriteLine($"A rókák jelenlegi száma: {foxes.Count}");
+                Console.WriteLine($"A nyulak jelenlegi száma: {rabbits.Count}");
 
-                }
-                foxes.RemoveAll(fox => fox == null || fox.Hunger == 0);
+                Console.WriteLine($"Hátralévő körök: {simCount}");
 
-                //Console.Clear();
-                //Console.WriteLine($"A rókák jelenlegi száma: {foxes.Count}");
-                //Console.WriteLine($"Hátralévő körök: {simCount}");
-                //DrawField();
+                DrawField();
 
+                Update();
 
-
-
-
-
-
-
-
-                Thread.Sleep(2000);
-
+                Thread.Sleep(1200);
                 //while (!Console.KeyAvailable)
                 //{
-                //    Thread.Sleep(100);
+                //    Thread.Sleep(1000);
                 //}
                 //Console.ReadKey(true);
+
+
                 simCount--;
+
+
             }
+
         }
     }
 }

@@ -23,15 +23,6 @@ namespace RokakNyulak
             fox_on_field = field;
         }
 
-        public void Eat()
-        {
-            Hunger--;
-            if (Hunger == 0)
-            {
-                fox_on_field.field[Row, Col] -= 2;
-            }
-        }
-
         public void Move()
         {
             int newRow = Row;
@@ -103,6 +94,16 @@ namespace RokakNyulak
                 fox_on_field.field[newRow, newCol] += 2;
                 Row = newRow;
                 Col = newCol;
+
+                Hunger--;
+                if (Hunger == 0)
+                {
+                    // Csökkentjük a rókát szimbolizáló értéket
+                    if (fox_on_field.field[Row, Col] == 12 || fox_on_field.field[Row, Col] == 22 || fox_on_field.field[Row, Col] == 32)
+                    {
+                        fox_on_field.field[Row, Col] -= 2;
+                    }
+                }
             }
         }
 
@@ -138,14 +139,14 @@ namespace RokakNyulak
                                 fox_on_field.field[targetRow, targetCol] == 32)
                             {
                                 neighborFoxes.Add((targetRow, targetCol));
-                            }                            
+                            }
                             else if (fox_on_field.field[targetRow, targetCol] == 10 ||
                                 fox_on_field.field[targetRow, targetCol] == 20 ||
                                 fox_on_field.field[targetRow, targetCol] == 30)
                             {
                                 emptyFields.Add((targetRow, targetCol));
                             }
-                            
+
                         }
                     }
                 }
@@ -154,7 +155,7 @@ namespace RokakNyulak
 
             if (neighborFoxes.Count == 1 && emptyFields.Count >= 1 && fox_on_field.foxes.IndexOf(this) == 0)
             {
-                (newFoxRow, newFoxCol) = emptyFields[0];
+                (newFoxRow, newFoxCol) = emptyFields[random.Next(emptyFields.Count)];
                 fox_on_field.field[newFoxRow, newFoxCol] += 2;
                 //return true;
 
