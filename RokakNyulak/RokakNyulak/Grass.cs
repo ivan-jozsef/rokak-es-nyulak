@@ -38,18 +38,18 @@ namespace RokakNyulak
 
         public void Action()
         {
-            if(this.State < 3) this.State++;
+            if (this.State < 3) this.State++;
 
-            switch(this.Food_value)
+            switch (this.Food_value)
             {
                 case 0:
                     this.Food_value++;
                     base.Color = ConsoleColor.Cyan;
-                break;
-                case 1: 
+                    break;
+                case 1:
                     this.Food_value++;
                     base.Color = ConsoleColor.Green;
-                break;
+                    break;
             }
 
         }

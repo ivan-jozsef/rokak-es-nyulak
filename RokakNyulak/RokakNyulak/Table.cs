@@ -40,14 +40,20 @@ namespace RokakNyulak
             Console.Clear();
             foreach (var field in TableFields.GetFields)
             {
-                Console.SetCursorPosition(field.Pos[0], field.Pos[1]);
-                SetCellColor(field.Color);
-                Console.Write("  ");
-                Console.ResetColor();
+                int col = field.Pos[0]*2;
+                int row = field.Pos[1];
+                if (row >= 0 && row < Console.WindowHeight *2 && col >= 0 && col < Console.WindowWidth)
+                {
+                    Console.SetCursorPosition(col, row);
+                    SetCellColor(field.Color);
+                    Console.Write("  ");
+                    Console.ResetColor();
+                    
+                }
             }
             Console.WriteLine($"\nAktuális állapot: \n" +
                     $"\tFű mezők száma: {TableFields.GetEntityCount("grass")}\n" +
-                    $"\tNyúl mezők száma: {TableFields.GetEntityCount("rabbit")}\n" +
+                    //$"\tNyúl mezők száma: {TableFields.GetEntityCount("rabbit")}\n" +
                     $"\tRóka mezők száma: {TableFields.GetEntityCount("fox")}\n"+
                     $"\tMezők száma: {TableFields.GetFields.Count}");
 
@@ -60,7 +66,8 @@ namespace RokakNyulak
         /// </summary>
         public void NextRound()
         {
-            foreach(var actField in TableFields.GetFields)
+            List<Field> fieldsCopy = new List<Field>(TableFields.GetFields);
+            foreach (var actField in fieldsCopy)
             {
                 if (actField.Entity == "grass") {
                     Grass useField = (Grass) actField;
@@ -74,7 +81,12 @@ namespace RokakNyulak
                     }
                 }
             }
-            System.Threading.Thread.Sleep(5000);
+            //System.Threading.Thread.Sleep(2000);
+            while (!Console.KeyAvailable)
+            {
+                Thread.Sleep(100);
+            }
+            Console.ReadKey(true);
             Console.Clear();
             DrawFields();
         }

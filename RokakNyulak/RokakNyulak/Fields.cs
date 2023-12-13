@@ -60,7 +60,7 @@ namespace RokakNyulak
         {
             "grass",
             "fox",
-            "rabbit",
+            //"rabbit",
             
         };
 
@@ -95,9 +95,9 @@ namespace RokakNyulak
 
                     yield return entities[rnd.Next(entities.Length)] switch
                     {
-                        "grass" => new Grass(ActPos, rnd.Next(0, 2 + 1), rnd.Next(0, 3 + 1), ConsoleColor.Green),
+                        "grass" => new Grass(ActPos, rnd.Next(0, 2 + 1), rnd.Next(0, 3 + 1), ConsoleColor.Yellow),
                         "fox" => new Fox("fox", ActPos, ConsoleColor.Red),
-                        "rabbit" => new Field("rabbit", ActPos, ConsoleColor.White),
+                        //"rabbit" => new Field("rabbit", ActPos, ConsoleColor.White),
                         _ => new Grass(ActPos, rnd.Next(0, 2 + 1), rnd.Next(0, 3 + 1), ConsoleColor.Green)
                     };
                 }
