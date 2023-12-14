@@ -1,4 +1,4 @@
 ﻿using RokakNyulak;
 
 Field mezo = new();
-mezo.Simulation();
+await mezo.SimulationAsync();

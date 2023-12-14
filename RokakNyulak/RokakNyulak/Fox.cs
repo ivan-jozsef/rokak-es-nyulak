@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RokakNyulak
@@ -14,7 +12,6 @@ namespace RokakNyulak
         public Field fox_on_field;
         private static Random random = new Random();
 
-
         public Fox(int row, int col, Field field)
         {
             Row = row;
@@ -23,8 +20,9 @@ namespace RokakNyulak
             fox_on_field = field;
         }
 
-        public void Move()
+        public async Task MoveAsync()
         {
+         
             int newRow = Row;
             int newCol = Col;
 
@@ -35,23 +33,20 @@ namespace RokakNyulak
                     int targetRow = Row + i;
                     int targetCol = Col + j;
 
-                    // Ellenőrizzük, hogy a célmegállapítás a pályán belül van-e
                     if (targetRow >= 0 && targetRow < fox_on_field.field.GetLength(0) &&
                         targetCol >= 0 && targetCol < fox_on_field.field.GetLength(1))
                     {
-                        // Ellenőrizzük, hogy a célmezőn van-e nyúl
                         if ((fox_on_field.field[targetRow, targetCol] == 11 ||
                             fox_on_field.field[targetRow, targetCol] == 21 ||
                             fox_on_field.field[targetRow, targetCol] == 31) &&
                             (Hunger < 8))
                         {
-                            // Mozgatjuk a rókát a nyúlhoz
-                            fox_on_field.field[Row, Col] -= 2; // Rókát eltávolítjuk a jelenlegi mezőről
-                            fox_on_field.field[targetRow, targetCol] += 1; // Rókát elhelyezzük a nyúl mezőjére
+                            fox_on_field.field[Row, Col] -= 2;
+                            fox_on_field.field[targetRow, targetCol] += 1;
                             Hunger += 3;
                             Row = targetRow;
                             Col = targetCol;
-                            return; 
+                            return;
                         }
                     }
                 }
@@ -88,6 +83,7 @@ namespace RokakNyulak
                     newCol = Math.Max(0, newCol - 1);
                     break;
             }
+
             if (fox_on_field.field[newRow, newCol] == 10 || fox_on_field.field[newRow, newCol] == 20 || fox_on_field.field[newRow, newCol] == 30)
             {
                 fox_on_field.field[Row, Col] -= 2;
@@ -98,7 +94,6 @@ namespace RokakNyulak
                 Hunger--;
                 if (Hunger == 0)
                 {
-                    // Csökkentjük a rókát szimbolizáló értéket
                     if (fox_on_field.field[Row, Col] == 12 || fox_on_field.field[Row, Col] == 22 || fox_on_field.field[Row, Col] == 32)
                     {
                         fox_on_field.field[Row, Col] -= 2;
@@ -107,33 +102,28 @@ namespace RokakNyulak
             }
         }
 
-        public Fox? Reproduction()
+        public async Task<Fox?> ReproductionAsync()
         {
-            //környező mezők vizsgálata, üres, illetve két róka egymás mellett van, akkor a következő körbe egy szabad mezőre egy új róka kerül
+           
 
-            // Keresés a környező mezőkön
             int newFoxRow;
             int newFoxCol;
 
             List<(int, int)> emptyFields = new List<(int, int)>();
             List<(int, int)> neighborFoxes = new List<(int, int)>();
 
-
-            for (int i = -1; i <= 1; i++) //egy róka körül kiválasztunk egy üres mezőt, ahol csak egy másik róka tartózkodik
+            for (int i = -1; i <= 1; i++)
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    //Console.WriteLine($"Az egyik róka koordinátái: {Row}:{Col}");
                     int targetRow = Row + i;
                     int targetCol = Col + j;
 
-                    // Ellenőrizzük, hogy a célmegállapítás a pályán belül van-e
                     if (targetRow >= 0 && targetRow < fox_on_field.field.GetLength(0) &&
                         targetCol >= 0 && targetCol < fox_on_field.field.GetLength(1))
                     {
                         if (!(i == 0 && j == 0))
                         {
-                            // Ellenőrizzük, hogy a célmezőn van-e róka
                             if (fox_on_field.field[targetRow, targetCol] == 12 ||
                                 fox_on_field.field[targetRow, targetCol] == 22 ||
                                 fox_on_field.field[targetRow, targetCol] == 32)
@@ -152,23 +142,18 @@ namespace RokakNyulak
                 }
             }
 
-
             if (neighborFoxes.Count == 1 && emptyFields.Count >= 1 && fox_on_field.foxes.IndexOf(this) == 0)
             {
                 (newFoxRow, newFoxCol) = emptyFields[random.Next(emptyFields.Count)];
                 fox_on_field.field[newFoxRow, newFoxCol] += 2;
-                //return true;
 
                 Fox newFox = new Fox(newFoxRow, newFoxCol, fox_on_field);
                 newFox.Hunger = 10;
                 fox_on_field.foxes.Add(newFox);
                 return newFox;
-
-                //return true;
             }
+
             return null;
         }
-
     }
 }
-
