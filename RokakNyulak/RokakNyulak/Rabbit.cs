@@ -47,6 +47,7 @@ namespace RokakNyulak
                 Hunger += 1;
                 return;
             }
+            Hunger--;
 
             List<(int, int)> possibleMoves = new List<(int, int)>();
 
@@ -86,7 +87,6 @@ namespace RokakNyulak
                 Col = randomMove.Item2;
             }
 
-            Hunger--;
             if (Hunger == 0)
             {
                 if (rabbit_on.field[Row, Col] == 11 || rabbit_on.field[Row, Col] == 21 || rabbit_on.field[Row, Col] == 31)
@@ -130,7 +130,7 @@ namespace RokakNyulak
                 }
             }
 
-            if (emptyFields.Count >= 1 && neighborRabbits.Count == 1 && rabbit_on.rabbits.IndexOf(this) == 0)
+            if (emptyFields.Count >= 1 && neighborRabbits.Count >= 1 && rabbit_on.rabbits.IndexOf(this) == 0)
             {
                 (newRabbitRow, newRabbitCol) = emptyFields[random.Next(emptyFields.Count)];
                 rabbit_on.field[newRabbitRow, newRabbitCol] += 1;

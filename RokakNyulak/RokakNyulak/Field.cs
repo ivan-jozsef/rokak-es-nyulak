@@ -14,7 +14,7 @@ namespace RokakNyulak
 
         public Field()
         {
-            field = new int[20, 50];
+            field = new int[20, 30];
             FieldGenerator();
         }
 
@@ -61,7 +61,7 @@ namespace RokakNyulak
                     field[i, j] = allapotok[random.Next(0, allapotok.Length)];
                 }
             }
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 100; i++)
             {
                 int row = random.Next(0, field.GetLength(0));
                 int col = random.Next(0, field.GetLength(1));
@@ -73,7 +73,7 @@ namespace RokakNyulak
                     rabbits.Add(rabbit);
                 }
             }
-            for (int i = 0; i < 13; i++)
+            for (int i = 0; i < 30; i++)
             {
                 int row = random.Next(0, field.GetLength(0));
                 int col = random.Next(0, field.GetLength(1));
@@ -108,25 +108,20 @@ namespace RokakNyulak
             List<Fox> newFoxes = new(foxes);
             List<Rabbit> newRabbits = new(rabbits);
 
-            var foxTasks = new List<Task>();
-            var rabbitTasks = new List<Task>();
-
             foreach (var fox in newFoxes)
             {
-                foxTasks.Add(fox.ReproductionAsync());
-                foxTasks.Add(fox.MoveAsync());
+                await fox.ReproductionAsync();
+                await fox.MoveAsync();
             }
             await Task.Delay(100);
             foreach (var rabbit in newRabbits)
             {
-                rabbitTasks.Add(rabbit.ReproductionAsync());
-                rabbitTasks.Add(rabbit.MoveAsync());
+                await rabbit.ReproductionAsync();
+                await rabbit.MoveAsync();
             }
             
             await Task.Delay(100);
-
-            await Task.WhenAll(foxTasks);
-            await Task.WhenAll(rabbitTasks);
+            
 
             foxes.RemoveAll(fox => fox == null || fox.Hunger == 0);
             rabbits.RemoveAll(rabbit => rabbit == null || rabbit.Hunger == 0);
@@ -136,7 +131,7 @@ namespace RokakNyulak
 
         public async Task SimulationAsync()
         {
-            int simCount = 1000;
+            int simCount = 200;
             while (simCount > 0)
             {
                 Console.Clear();
@@ -150,16 +145,7 @@ namespace RokakNyulak
 
                 await UpdateAsync();
 
-                Console.Clear();
-
-                Console.WriteLine($"A rókák jelenlegi száma: {foxes.Count}");
-                Console.WriteLine($"A nyulak jelenlegi száma: {rabbits.Count}");
-
-                Console.WriteLine($"Hátralévő körök: {simCount}");
-
-                DrawField();
-
-                await Task.Delay(1200);
+                await Task.Delay(400);
 
                 simCount--;
             }
