@@ -42,6 +42,11 @@ namespace RokakNyulak
                             (Hunger < 8))
                         {
                             fox_on_field.field[Row, Col] -= 2;
+                            Rabbit eaten = fox_on_field.rabbits.FirstOrDefault(rabbit => rabbit.Row == targetRow && rabbit.Col ==  targetCol);
+                            if(eaten != null)
+                            {
+                                fox_on_field.rabbits.Remove(eaten);
+                            }
                             fox_on_field.field[targetRow, targetCol] += 1;
                             Hunger += 3;
                             Row = targetRow;

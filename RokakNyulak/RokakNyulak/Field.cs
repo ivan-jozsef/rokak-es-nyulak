@@ -116,12 +116,14 @@ namespace RokakNyulak
                 foxTasks.Add(fox.ReproductionAsync());
                 foxTasks.Add(fox.MoveAsync());
             }
-
+            await Task.Delay(100);
             foreach (var rabbit in newRabbits)
             {
                 rabbitTasks.Add(rabbit.ReproductionAsync());
                 rabbitTasks.Add(rabbit.MoveAsync());
             }
+            
+            await Task.Delay(100);
 
             await Task.WhenAll(foxTasks);
             await Task.WhenAll(rabbitTasks);
